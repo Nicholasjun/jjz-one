@@ -35,4 +35,7 @@ const router = new VueRouter({
     { path: '*', name: '404', component: NotFound }
   ]
 })
+// 前置导航守卫
+// to是去哪里,from是来自哪里,next方法
+
 export default router

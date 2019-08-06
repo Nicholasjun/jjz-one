@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import store from '@/store'
 export default {
   data () {
     // 自定义校验函数
@@ -86,6 +87,9 @@ export default {
             .then(res => {
               // res是响应对象   数据属于响应主体   res.data是数据
               // console.log(res)
+              // 存储用户信息
+              store.setUser(res.data.data)
+              // 跳转去首页
               this.$router.push('/')
             })
             .catch(() => {
