@@ -7,6 +7,6 @@ export default {
     window.sessionStorage.setItem(KEY, JSON.stringify(user))
   },
   getUser () {
-    return window.sessionStorage.getItem(KEY) || '{}'
+    return JSON.parse(window.sessionStorage.getItem(KEY) || '{}')
   }
 }

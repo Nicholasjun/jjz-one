@@ -76,25 +76,36 @@ export default {
   methods: {
     login () {
       // 对整个表单进行校验
-      this.$refs.loginForm.validate(valid => {
+      this.$refs.loginForm.validate(async valid => {
         if (valid) {
-          this.$http
-            .post(
-              // 校验成功发起登录请求
-              'http://ttapi.research.itcast.cn/mp/v1_0/authorizations',
-              this.loginForm
-            )
-            .then(res => {
-              // res是响应对象   数据属于响应主体   res.data是数据
-              // console.log(res)
-              // 存储用户信息
-              store.setUser(res.data.data)
-              // 跳转去首页
-              this.$router.push('/')
-            })
-            .catch(() => {
-              this.$message.error('手机号或验证码错误')
-            })
+          // this.$http
+          //   .post(
+          //     // 校验成功发起登录请求
+          //     'http://ttapi.research.itcast.cn/mp/v1_0/authorizations',
+          //     this.loginForm
+          //   )
+          //   .then(res => {
+          //     // res是响应对象   数据属于响应主体   res.data是数据
+          //     // console.log(res)
+          //     // 存储用户信息
+          //     store.setUser(res.data.data)
+          //     // 跳转去首页
+          //     this.$router.push('/')
+          //   })
+          //   .catch(() => {
+          //     this.$message.error('手机号或验证码错误')
+          //   })
+          // 这个和上边是一样的,下面这个主要演示await使用的时候失败的请求
+          // try{可能会执行报错代码}catch(e){处理错误}
+          try {
+            const {
+              data: { data }
+            } = await this.$http.post('authorizations', this.loginForm)
+            store.setUser(data)
+            this.$router.push('/')
+          } catch (e) {
+            this.$message.error('手机号或验证码错误')
+          }
         }
       })
     }
