@@ -55,15 +55,15 @@
       <el-header>
         <span class="el-icon-s-fold" @click="toggleMenu"></span>
         <span class="text">江苏传智播客科技教育有限公司</span>
-        <el-dropdown class="my-dropdown">
+        <el-dropdown class="my-dropdown" @command="clickMenu">
           <span class="el-dropdown-link">
-            <img src="../../assets/images/avatar.jpg" alt />
-            下拉菜单
+            <img :src="photo" alt />
+            {{name}}
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item icon="el-icon-setting">个人设置</el-dropdown-item>
-            <el-dropdown-item icon="el-icon-unlock">退出登录</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-setting" command="setting">个人设置</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-unlock" command="logout">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </el-header>
@@ -76,15 +76,41 @@
 </template>
 
 <script>
+import store from '@/store'
 export default {
   data () {
     return {
-      isCollapse: false
+      isCollapse: false,
+      name: '',
+      photo: ''
     }
+  },
+  created () {
+    const user = store.getUser()
+    this.name = user.name
+    this.photo = user.photo
   },
   methods: {
     toggleMenu () {
       this.isCollapse = !this.isCollapse
+    },
+    // @click绑定的是原生dom事件,现在绑在组件上,会被认为是自定义事件
+    // click绑定在组件解析后的dom上,使用事件修饰符 native 绑定原生事件
+    setting () {
+      // 跳转到个人设置页面
+      this.$router.push('/setting')
+    },
+    logout () {
+      // 清除用户信息
+      store.clearUser()
+      // 跳转登录
+      this.$router.push({ name: 'login' })
+    },
+    // 点击下拉菜单的事件,如果要接收事件的默认参数,结构里就不能加括号
+    // 之前那种是@click.native="setting"
+    // 这是另一种实现方式,element.ui给的方式
+    clickMenu (menuType) {
+      this[menuType]()
     }
   }
 }
