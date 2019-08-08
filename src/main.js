@@ -9,6 +9,8 @@ import router from '@/router'
 // 导入样式
 import '@/styles/index.less'
 import axios from '@/api'
+import myPlugin from '@/components'
+Vue.use(myPlugin)
 // 设置一个vue的原型$http=axios,就可以在其他vue文件里直接this.$http使用axios了
 Vue.prototype.$http = axios
 Vue.use(ElementUI)
