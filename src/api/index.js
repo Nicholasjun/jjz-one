@@ -2,8 +2,19 @@
 import axios from 'axios'
 import store from '@/store'
 import router from '../router'
+import JSONBIG from 'json-bigint'
+
 // 进行配置
 axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0/'
+axios.defaults.transformResponse = [(data) => {
+  // 对data进行转化
+  // data 在删除接口返回的是null, 使用JSONBIG转换null会报错
+  try {
+    return JSONBIG.parse(data)
+  } catch (e) {
+    return data
+  }
+}]
 // axios.defaults.headers = {
 //   Authorization: `Bearer ${store.getUser().token}`
 // }

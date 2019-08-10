@@ -54,7 +54,7 @@
     <el-container>
       <el-header>
         <span class="el-icon-s-fold" @click="toggleMenu"></span>
-        <span class="text">江苏传智播客科技教育有限公司</span>
+        <span class="text">hello,Jun</span>
         <el-dropdown class="my-dropdown" @command="clickMenu">
           <span class="el-dropdown-link">
             <img :src="photo" alt />
