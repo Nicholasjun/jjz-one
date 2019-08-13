@@ -107,7 +107,7 @@ export default {
         // 状态:
         status: null,
         // 频道索引,默认选第几个
-        channel_id: 1,
+        channel_id: null,
         // 下面俩是代表的日期
         begin_pubdate: null,
         end_pubdate: null,
@@ -146,7 +146,7 @@ export default {
     // 编辑文章
     edit (id) {
       // 发布文章和编辑文章使用的是同一个路由规则
-      this.$router.push('/publish?id' + id)
+      this.$router.push('/publish?id=' + id)
     },
     // 删除文章
     del () {
